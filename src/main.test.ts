@@ -28,3 +28,11 @@ describe('addTodo', () => {
         expect(result[0].completed).toBe(false);
     })
 })
+
+describe('removeTodo', () => {
+    it('should remove a todo from the list', () => {
+        const todos: Todo[] = [{ id: 1, text: 'Test todo', completed: false }];
+        const result = removeTodo(todos, 1);
+        expect(result.length).toBe(0);
+    })
+})
