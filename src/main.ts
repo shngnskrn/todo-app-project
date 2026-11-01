@@ -55,6 +55,9 @@ todoForm.addEventListener('submit', (event: Event) => {
         errorMessage.style.display = 'none'
         addTodo(text)
         todoInput.value = '' //Clears the input field after add:
+    } else {
+        todoInput.classList.add('input-error')
+        errorMessage.style.display = 'block'
     }
 })
 
