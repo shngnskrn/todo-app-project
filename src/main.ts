@@ -59,10 +59,12 @@ const renderTodos = ():void => {
         li.innerHTML = `
             <input type="checkbox" ${checked}>
             <span>${todo.text}</span>
-            <button>Remove</button>
+            <button class="edit-btn">Edit</button>
+            <button class="remove-btn">Remove</button>
         `
         addRemoveButtonListener(li, todo.id);
         addToggleListener(li, todo.id);
+        addEditButtonListener(li, todo.id);
         todoList.appendChild(li);
     })
 }
@@ -84,7 +86,7 @@ todoForm.addEventListener('submit', (event: Event) => {
 })
 
 const addRemoveButtonListener = (li:HTMLLIElement, id:number):void => {
-    const removeButton = li.querySelector('button');
+    const removeButton = li.querySelector('.remove-btn');
     removeButton?.addEventListener('click', () => removeTodo(id))
 }
 
@@ -105,6 +107,24 @@ const toggleTodo = (id:number):void => {
         todo.completed = !todo.completed
     }
     renderTodos()
+}
+
+// Adds a click listener to the edit button
+const addEditButtonListener = (li:HTMLLIElement, id:number):void => {
+    const editButton = li.querySelector('.edit-btn');
+    editButton?.addEventListener('click', () => editTodo(id))
+}
+
+// Asks the user for new text and updates the todo
+const editTodo = (id:number):void => {
+    const todo = todos.find(todo => todo.id === id)
+    if (todo) {
+        const text = prompt('Edit todo', todo.text)
+        if (text && text.trim() !== '') {
+            todo.text = text.trim()
+            renderTodos()
+        }
+    }
 }
 
 // Updates the progress bar to show how many todos are completed
