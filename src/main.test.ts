@@ -123,3 +123,27 @@ describe('progress bar', () => {
         expect(getProgress(todos)).toBe(50);
     })
 })
+
+const saveColor = (color: string): void => {
+    localStorage.setItem('backgroundColor', color)
+}
+
+const loadColor = (): string => {
+    const saved = localStorage.getItem('backgroundColor')
+    if (saved) {
+        return saved
+    }
+    return '#828282'
+}
+
+describe('background color', () => {
+    it('should save and load the color', () => {
+        saveColor('#ff0000');
+        expect(loadColor()).toBe('#ff0000');
+    })
+
+    it('should use grey when no color is saved', () => {
+        localStorage.clear();
+        expect(loadColor()).toBe('#828282');
+    })
+})
