@@ -101,3 +101,25 @@ describe('local storage', () => {
         expect(result.length).toBe(0);
     })
 })
+
+const getProgress = (todos: Todo[]): number => {
+    if (todos.length === 0) {
+        return 0
+    }
+    const completed = todos.filter(todo => todo.completed).length
+    return Math.round((completed / todos.length) * 100)
+}
+
+describe('progress bar', () => {
+    it('should be 0 when there are no todos', () => {
+        expect(getProgress([])).toBe(0);
+    })
+
+    it('should be 50 when half of the todos are completed', () => {
+        const todos: Todo[] = [
+            { id: 1, text: 'Todo A', completed: true },
+            { id: 2, text: 'Todo B', completed: false }
+        ];
+        expect(getProgress(todos)).toBe(50);
+    })
+})

@@ -25,6 +25,9 @@ const todoList = document.getElementById('todo-list') as HTMLUListElement
 
 const errorMessage = document.getElementById('error-message') as HTMLParagraphElement
 
+const progressBar = document.getElementById('progress-bar') as HTMLDivElement
+const progressText = document.getElementById('progress-text') as HTMLParagraphElement
+
 const addTodo = (text:string):void => {
     const newTodo: Todo = {
         id: Date.now(), 
@@ -39,6 +42,7 @@ const addTodo = (text:string):void => {
 
 const renderTodos = ():void => {
     saveTodos()
+    updateProgress()
     todoList.innerHTML = '';
 
     todos.forEach(todo => {
@@ -101,6 +105,20 @@ const toggleTodo = (id:number):void => {
         todo.completed = !todo.completed
     }
     renderTodos()
+}
+
+// Updates the progress bar to show how many todos are completed
+const updateProgress = ():void => {
+    const total = todos.length
+    const completed = todos.filter(todo => todo.completed).length
+
+    let percent = 0
+    if (total > 0) {
+        percent = Math.round((completed / total) * 100)
+    }
+
+    progressBar.style.width = percent + '%'
+    progressText.textContent = `${completed} of ${total} completed (${percent}%)`
 }
 
 // Removes all todos from the list and from local storage
