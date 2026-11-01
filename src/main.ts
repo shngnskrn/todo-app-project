@@ -129,5 +129,36 @@ clearButton.addEventListener('click', () => {
     localStorage.removeItem('todos')
 })
 
+// Function to change the background color of the page based on the color picker value
+const changeBackgroundColor = (color: string): void => {
+    document.body.style.backgroundColor = color
+    localStorage.setItem('backgroundColor', color) // NEW: save the color
+}
+
+// Function to initialize the color picker event listener
+const initializeColorPicker = (): void => {
+    const colorPicker = document.getElementById('colorPicker') as HTMLInputElement
+    if (colorPicker) {
+        // NEW: load the saved color when the page starts
+        const savedColor = localStorage.getItem('backgroundColor')
+        if (savedColor) {
+            changeBackgroundColor(savedColor)
+            colorPicker.value = savedColor
+        }
+
+        colorPicker.addEventListener('input', (event: Event) => {
+            const target = event.target as HTMLInputElement
+            changeBackgroundColor(target.value)
+        })
+    } else {
+        console.error('Color picker element not found')
+    }
+}
+
+// Call the initializeColorPicker function when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeColorPicker()
+})
+
 // Draw the saved todos when the page loads - must be at the end so all functions exist
 renderTodos();
