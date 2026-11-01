@@ -51,3 +51,25 @@ describe('error message', () => {
         expect(isEmpty('Buy milk')).toBe(false);
     })
 })
+
+const toggleTodo = (todos: Todo[], id: number): Todo[] => {
+    const todo = todos.find(todo => todo.id === id)
+    if (todo) {
+        todo.completed = !todo.completed
+    }
+    return todos
+}
+
+describe('toggleTodo', () => {
+    it('should mark a todo as completed', () => {
+        const todos: Todo[] = [{ id: 1, text: 'Test todo', completed: false }];
+        const result = toggleTodo(todos, 1);
+        expect(result[0].completed).toBe(true);
+    })
+
+    it('should mark a completed todo as not completed', () => {
+        const todos: Todo[] = [{ id: 1, text: 'Test todo', completed: true }];
+        const result = toggleTodo(todos, 1);
+        expect(result[0].completed).toBe(false);
+    })
+})
