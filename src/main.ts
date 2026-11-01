@@ -7,7 +7,17 @@ interface Todo {
     completed: boolean;
 }
 
-let todos: Todo[] = [];
+// Load saved todos from local storage, or start with an empty list
+const savedTodos = localStorage.getItem('todos')
+let todos: Todo[] = []
+if (savedTodos) {
+    todos = JSON.parse(savedTodos) as Todo[]
+}
+
+// Saves the todos to local storage, so they are still there after a refresh
+const saveTodos = ():void => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+}
 
 const todoInput = document.getElementById('todo-input') as HTMLInputElement
 const todoForm = document.querySelector('.todo-form') as HTMLFormElement
@@ -28,6 +38,7 @@ const addTodo = (text:string):void => {
 }
 
 const renderTodos = ():void => {
+    saveTodos()
     todoList.innerHTML = '';
 
     todos.forEach(todo => {
@@ -51,8 +62,6 @@ const renderTodos = ():void => {
         todoList.appendChild(li);
     })
 }
-
-renderTodos();
 
 todoForm.addEventListener('submit', (event: Event) => {
     event.preventDefault();
@@ -93,3 +102,14 @@ const toggleTodo = (id:number):void => {
     }
     renderTodos()
 }
+
+// Removes all todos from the list and from local storage
+const clearButton = document.getElementById('clear-btn') as HTMLButtonElement
+clearButton.addEventListener('click', () => {
+    todos = []
+    renderTodos()
+    localStorage.removeItem('todos')
+})
+
+// Draw the saved todos when the page loads - must be at the end so all functions exist
+renderTodos();
