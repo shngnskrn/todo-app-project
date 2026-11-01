@@ -73,3 +73,31 @@ describe('toggleTodo', () => {
         expect(result[0].completed).toBe(false);
     })
 })
+
+const saveTodos = (todos: Todo[]): void => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+}
+
+const loadTodos = (): Todo[] => {
+    const saved = localStorage.getItem('todos')
+    if (saved) {
+        return JSON.parse(saved) as Todo[]
+    }
+    return []
+}
+
+describe('local storage', () => {
+    it('should save and load todos', () => {
+        const todos: Todo[] = [{ id: 1, text: 'Test todo', completed: true }];
+        saveTodos(todos);
+        const result = loadTodos();
+        expect(result[0].text).toBe('Test todo');
+        expect(result[0].completed).toBe(true);
+    })
+
+    it('should return an empty list when nothing is saved', () => {
+        localStorage.clear();
+        const result = loadTodos();
+        expect(result.length).toBe(0);
+    })
+})
