@@ -1,32 +1,42 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>to-do-app</title>
   </head>
+
   <body>
     <div id="app"></div>
     <div class="container">
       <h1>To-Do App</h1>
+
+      <!-- Form to add a new todo -->
       <form class="todo-form">
         <input type="text" placeholder="Add a new to-do" id="todo-input">
         <button type="submit">Add</button>
       </form>
+
+      <!-- Shown when the user tries to add an empty todo -->
       <p id="error-message">Please enter a to-do item</p>
 
+      <!-- Progress bar: the inner div grows as todos are completed -->
       <div class="progress">
         <div class="progress-bar" id="progress-bar"></div>
       </div>
       <p id="progress-text">0 of 0 completed</p>
 
+      <!-- The todos are added here by main.ts -->
       <ul class="todo-list" id="todo-list">
 
       </ul>
 
+      <!-- Removes all todos -->
       <button id="clear-btn">Clear all</button>
 
+      <!-- Changes the page background color -->
       <div class="color-row">
         <label for="colorPicker">Background color</label>
         <input type="color" id="colorPicker" value="#828282">
