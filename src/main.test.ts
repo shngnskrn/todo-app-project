@@ -147,3 +147,25 @@ describe('background color', () => {
         expect(loadColor()).toBe('#828282');
     })
 })
+
+const editTodo = (todos: Todo[], id: number, newText: string): Todo[] => {
+    const todo = todos.find(todo => todo.id === id)
+    if (todo && newText.trim() !== '') {
+        todo.text = newText.trim()
+    }
+    return todos
+}
+
+describe('editTodo', () => {
+    it('should change the text of a todo', () => {
+        const todos: Todo[] = [{ id: 1, text: 'Old text', completed: false }];
+        const result = editTodo(todos, 1, 'New text');
+        expect(result[0].text).toBe('New text');
+    })
+
+    it('should not change the text to an empty string', () => {
+        const todos: Todo[] = [{ id: 1, text: 'Old text', completed: false }];
+        const result = editTodo(todos, 1, '   ');
+        expect(result[0].text).toBe('Old text');
+    })
+})
