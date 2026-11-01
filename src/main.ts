@@ -28,18 +28,27 @@ const addTodo = (text:string):void => {
 }
 
 const renderTodos = ():void => {
-    // clear the current list - test later
     todoList.innerHTML = '';
 
     todos.forEach(todo => {
-        const li = document.createElement('li')
-        li.className = 'todo-item'
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+
+        // If the todo is completed, tick the checkbox and add the completed class
+        let checked = ''
+        if(todo.completed) {
+            checked = 'checked'
+            li.classList.add('completed')
+        }
+
         li.innerHTML = `
+            <input type="checkbox" ${checked}>
             <span>${todo.text}</span>
             <button>Remove</button>
         `
         addRemoveButtonListener(li, todo.id);
-        todoList.appendChild(li)
+        addToggleListener(li, todo.id);
+        todoList.appendChild(li);
     })
 }
 
@@ -68,5 +77,19 @@ const addRemoveButtonListener = (li:HTMLLIElement, id:number):void => {
 
 const removeTodo = (id:number):void => {
     todos = todos.filter(todo => todo.id !== id)
+    renderTodos()
+}
+
+const addToggleListener = (li:HTMLLIElement, id:number):void => {
+    const checkbox = li.querySelector('input');
+    checkbox?.addEventListener('change', () => toggleTodo(id))
+}
+
+// Finds the todo and flips completed between true and false
+const toggleTodo = (id:number):void => {
+    const todo = todos.find(todo => todo.id === id)
+    if (todo) {
+        todo.completed = !todo.completed
+    }
     renderTodos()
 }
