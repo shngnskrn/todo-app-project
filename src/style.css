@@ -82,7 +82,7 @@ h1 {
 }
 
 
-.input-error {
+.todo-form .input-error {
   border: 2px solid red;
   background-color: #ffe6e6; /* Optional: Light red background to indicate error */
 }
