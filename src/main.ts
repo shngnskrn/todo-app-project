@@ -103,5 +103,13 @@ const toggleTodo = (id:number):void => {
     renderTodos()
 }
 
+// Removes all todos from the list and from local storage
+const clearButton = document.getElementById('clear-btn') as HTMLButtonElement
+clearButton.addEventListener('click', () => {
+    todos = []
+    renderTodos()
+    localStorage.removeItem('todos')
+})
+
 // Draw the saved todos when the page loads - must be at the end so all functions exist
 renderTodos();
