@@ -36,3 +36,18 @@ describe('removeTodo', () => {
         expect(result.length).toBe(0);
     })
 })
+
+const isEmpty = (text: string): boolean => {
+    return text.trim() === ''
+}
+
+describe('error message', () => {
+    it('should see empty input as invalid', () => {
+        expect(isEmpty('')).toBe(true);
+        expect(isEmpty('   ')).toBe(true);
+    })
+
+    it('should see text as valid', () => {
+        expect(isEmpty('Buy milk')).toBe(false);
+    })
+})
