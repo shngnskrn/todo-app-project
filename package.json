@@ -7,10 +7,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "testcafe chrome:headless e2e/ --app \"npm run dev\" --app-init-delay 4000",
+    "test:e2e:remote": "testcafe remote e2e/ --hostname localhost --app \"npm run dev\" --app-init-delay 4000"
   },
   "devDependencies": {
     "jsdom": "^29.1.1",
+    "testcafe": "^3.7.7",
     "typescript": "~6.0.2",
     "vite": "^8.3.0",
     "vitest": "^5.0.3"
