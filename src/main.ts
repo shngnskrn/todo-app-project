@@ -216,6 +216,15 @@ clearButton.addEventListener('click', () => {
     localStorage.removeItem('todos')
 })
 
+// -Clear completed todos
+
+// Removes only the completed todos and keeps the rest
+const clearCompletedButton = document.getElementById('clear-completed-btn') as HTMLButtonElement
+clearCompletedButton.addEventListener('click', () => {
+    todos = todos.filter(todo => !todo.completed) // keep only the todos that are not completed
+    renderTodos()
+})
+
 // -Color picker
 
 // Started in class - I added saving and loading the color with local storage
