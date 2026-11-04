@@ -169,3 +169,19 @@ describe('editTodo', () => {
         expect(result[0].text).toBe('Old text');
     })
 })
+
+const clearCompleted = (todos: Todo[]): Todo[] => {
+    return todos.filter(todo => !todo.completed)
+}
+
+describe('clearCompleted', () => {
+    it('should remove only the completed todos', () => {
+        const todos: Todo[] = [
+            { id: 1, text: 'Todo A', completed: true },
+            { id: 2, text: 'Todo B', completed: false }
+        ];
+        const result = clearCompleted(todos);
+        expect(result.length).toBe(1);
+        expect(result[0].text).toBe('Todo B');
+    })
+})

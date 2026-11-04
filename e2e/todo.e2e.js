@@ -7,6 +7,7 @@ const todoItems = Selector('.todo-item')
 const errorMessage = Selector('#error-message')
 const progressText = Selector('#progress-text')
 const clearButton = Selector('#clear-btn')
+const clearCompletedButton = Selector('#clear-completed-btn')
 const colorPicker = Selector('#colorPicker')
 
 // Picks a color in the color picker, the same way the "input" event does in the browser
@@ -192,4 +193,26 @@ test('Edit: clicking Cancel keeps the old text', async t => {
         .setNativeDialogHandler(() => null) // null means the user clicked Cancel
         .click(todoItems.nth(0).find('.edit-btn'))
         .expect(todoItems.nth(0).find('span').innerText).eql('Old text')
+})
+
+// -Clear completed
+
+test('Clear completed: only completed todos are removed', async t => {
+    await t
+        .typeText(todoInput, 'Todo A')
+        .click(addButton)
+        .typeText(todoInput, 'Todo B')
+        .click(addButton)
+        .click(todoItems.nth(0).find('input'))
+        .click(clearCompletedButton)
+        .expect(todoItems.count).eql(1)
+        .expect(todoItems.nth(0).find('span').innerText).eql('Todo B')
+})
+
+test('Clear completed: todos that are not completed stay in the list', async t => {
+    await t
+        .typeText(todoInput, 'Todo A')
+        .click(addButton)
+        .click(clearCompletedButton)
+        .expect(todoItems.count).eql(1)
 })
